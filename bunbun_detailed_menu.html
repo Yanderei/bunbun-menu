@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BunBun Boxes - How Scoops Work</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #FFE4E6 0%, #FDF2F8 50%, #F3E8FF 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .menu-board {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(255, 182, 193, 0.3);
+            border: 4px solid #FFB6C1;
+            position: relative;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 42px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #FF69B4, #DDA0DD, #87CEEB);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            color: #8B5A8C;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .explanation {
+            background: rgba(255, 240, 245, 0.8);
+            padding: 20px;
+            border-radius: 20px;
+            border: 2px solid #FFE4E6;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .explanation h3 {
+            color: #8B5A8C;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .explanation p {
+            color: #6B4C7C;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .box-section {
+            margin-bottom: 30px;
+            background: rgba(255, 240, 245, 0.5);
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid #FFE4E6;
+        }
+        
+        .box-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #8B5A8C;
+            justify-content: center;
+        }
+        
+        .box-icon {
+            font-size: 36px;
+            margin-right: 15px;
+        }
+        
+        .box-description {
+            text-align: center;
+            font-size: 16px;
+            color: #6B4C7C;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .scoop-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .scoop-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            border: 3px solid #FFE4E6;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .scoop-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.4);
+        }
+        
+        .scoop-number {
+            background: linear-gradient(45deg, #FF69B4, #DDA0DD);
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 15px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+        
+        .scoop-content {
+            color: #8B5A8C;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .free-gifts {
+            color: #FF69B4;
+            font-size: 14px;
+            font-weight: bold;
+            background: rgba(255, 105, 180, 0.1);
+            padding: 8px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .bonus-item {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        
+        .mini-section {
+            background: linear-gradient(45deg, #FFE4E6, #F3E8FF);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 3px solid #FFB6C1;
+        }
+        
+        .mini-header {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            color: #8B5A8C;
+            margin-bottom: 15px;
+        }
+        
+        .mini-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .mini-card {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid #FFE4E6;
+            text-align: center;
+        }
+        
+        .mini-card h4 {
+            color: #8B5A8C;
+            margin-bottom: 5px;
+        }
+        
+        .mini-card p {
+            color: #6B4C7C;
+            font-size: 14px;
+        }
+        
+        .theme-section {
+            background: rgba(255, 240, 245, 0.8);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 2px solid #FFE4E6;
+        }
+        
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .theme-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #FFE4E6;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .theme-card.pink { border-color: #FFB6C1; }
+        .theme-card.brown { border-color: #D2B48C; }
+        .theme-card.green { border-color: #90EE90; }
+        .theme-card.purple { border-color: #DDA0DD; }
+        .theme-card.blue { border-color: #87CEEB; }
+        
+        .theme-title {
+            font-weight: bold;
+            color: #8B5A8C;
+            margin-bottom: 5px;
+        }
+        
+        .lucky-game {
+            background: linear-gradient(45deg, #FFE4E6, #F3E8FF);
+            border: 3px solid #FFB6C1;
+            border-radius: 25px;
+            padding: 25px;
+            text-align: center;
+            margin: 25px 0;
+        }
+        
+        .lucky-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #8B5A8C;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #8B5A8C;
+        }
+        
+        .dm-button {
+            background: linear-gradient(45deg, #FF69B4, #DDA0DD);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .menu-board {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .scoop-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .mini-grid, .theme-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-board">
+        <div class="header">
+            <div class="logo">🐰 BunBun Boxes 🐰</div>
+            <div class="subtitle">Trinidad's Cutest Mystery Scoop Experience! ✨</div>
+        </div>
+        
+        <div class="explanation">
+            <h3>🍦 How Our Scoop System Works</h3>
+            <p>Choose your box type, pick how many scoops you want, and we'll surprise you with kawaii goodies! Each scoop = 5-6 mystery items + free gifts. The more scoops, the more surprises! 💖</p>
+        </div>
+        
+        <div class="mini-section">
+            <div class="mini-header">🌟 MINI BUNDLES 🌟</div>
+            <p style="text-align: center; color: #6B4C7C; margin-bottom: 10px;">Perfect for first-time kawaii lovers!</p>
+            <div class="mini-grid">
+                <div class="mini-card">
+                    <h4>🎀 Kawaii Mini</h4>
+                    <p>3-4 mixed cute items + bunny charm</p>
+                </div>
+                <div class="mini-card">
+                    <h4>✏️ Stationery Mini</h4>
+                    <p>3-4 pens/notebooks + bunny charm</p>
+                </div>
+                <div class="mini-card">
+                    <h4>💍 Jewelry Mini</h4>
+                    <p>3-4 accessories + bunny charm</p>
+                </div>
+                <div class="mini-card">
+                    <h4>🌸 Scrunchie Mini</h4>
+                    <p>2 scrunchies + bonus + bunny charm</p>
+                </div>
+                <div class="mini-card">
+                    <h4>💎 Bracelet Mini</h4>
+                    <p>1 bracelet + 2 bonus + bunny charm</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="box-section">
+            <div class="box-header">
+                <span class="box-icon">✏️</span>
+                STATIONERY SCOOP BOXES
+            </div>
+            <div class="box-description">
+                Pens • Notebooks • Washi Tape • Stickers • Clips & More!
+            </div>
+            <div class="scoop-options">
+                <div class="scoop-card">
+                    <div class="scoop-number">1</div>
+                    <div class="scoop-content">5-6 Stationery Items</div>
+                    <div class="free-gifts">+ 1 FREE GIFT</div>
+                </div>
+                <div class="scoop-card">
+                    <div class="scoop-number">2</div>
+                    <div class="scoop-content">10-12 Stationery Items</div>
+                    <div class="free-gifts">+ 2 FREE GIFTS</div>
+                </div>
+                <div class="scoop-card">
+                    <div class="scoop-number">3</div>
+                    <div class="scoop-content">15-18 Stationery Items</div>
+                    <div class="free-gifts">+ 3 FREE GIFTS</div>
+                    <div class="bonus-item">✨ LUCKY CHARM</div>
+                </div>
+                <div class="scoop-card">
+                    <div class="scoop-number">4+</div>
+                    <div class="scoop-content">20+ Stationery Items</div>
+                    <div class="free-gifts">+ MORE FREE GIFTS</div>
+                    <div class="bonus-item">✨ LUCKY CHARMS</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="box-section">
+            <div class="box-header">
+                <span class="box-icon">💍</span>
+                JEWELRY & ACCESSORIES
+            </div>
+            <div class="box-description">
+                Rings • Bracelets • Hair Clips • Charms • Phone Accessories!
+            </div>
+            <div class="scoop-options">
+                <div class="scoop-card">
+                    <div class="scoop-number">1</div>
+                    <div class="scoop-content">5-6 Jewelry Items</div>
+                    <div class="free-gifts">+ 1 FREE GIFT</div>
+                </div>
+                <div class="scoop-card">
+                    <div class="scoop-number">2</div>
+                    <div class="scoop-content">10-12 Jewelry Items</div>
+                    <div class="free-gifts">+ 2 FREE GIFTS</div>
+                </div>
+                <div class="scoop-card">
+                    <div class="scoop-number">3</div>
+                    <div class="scoop-content">15-18 Jewelry Items</div>
+                    <div class="free-gifts">+ 3 FREE GIFTS</div>
+                    <div class="bonus-item">✨ LUCKY CHARM</div>
+                </div>
+                <div class="scoop-card">
+                    <div class="scoop-number">4+</div>
+                    <div class="scoop-content">20+ Jewelry Items</div>
+                    <div class="free-gifts">+ MORE FREE GIFTS</div>
+                    <div class="bonus-item">✨ LUCKY CHARMS</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="box-section">
+            <div class="box-header">
+                <span class="box-icon">🌸</span>
+                SCRUNCHIE SPECIALTY
+            </div>
+            <div class="box-description">
+                Hair Scrunchies & Hair Accessories in Every Style!
+            </div>
+            <div class="scoop-options">
+                <div class="scoop-card">
+                    <div class="scoop-number">1</div>
+                    <div class="scoop-content">3 Scrunchies</div>
+                    <div class="free-gifts">+ 1 FREE GIFT</div>
+                </div>
+                <div class="scoop-card">
+                    <div class="scoop-number">2</div>
+                    <div class="scoop-content">6 Scrunchies</div>
+                    <div class="free-gifts">+ 2 FREE GIFTS</div>
+                </div>
+                <div class="scoop-card">
+                    <div class="scoop-number">3</div>
+                    <div class="scoop-content">9 Scrunchies</div>
+                    <div class="free-gifts">+ 3 FREE GIFTS</div>
+                    <div class="bonus-item">✨ LUCKY CHARM</div>
+                </div>
+                <div class="scoop-card">
+                    <div class="scoop-number">4+</div>
+                    <div class="scoop-content">12+ Scrunchies</div>
+                    <div class="free-gifts">+ MORE FREE GIFTS</div>
+                    <div class="bonus-item">✨ LUCKY CHARMS</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="box-section">
+            <div class="box-header">
+                <span class="box-icon">💎</span>
+                BRACELET SPECIALTY
+            </div>
+            <div class="box-description">
+                Charm Bracelets • Beaded Bracelets • Friendship Bracelets!
+            </div>
+            <div class="scoop-options">
+                <div class="scoop-card">
+                    <div class="scoop-number">1</div>
+                    <div class="scoop-content">2 Bracelets</div>
+                    <div class="free-gifts">+ 1 FREE GIFT</div>
+                </div>
+                <div class="scoop-card">
+                    <div class="scoop-number">2</div>
+                    <div class="scoop-content">4 Bracelets</div>
+                    <div class="free-gifts">+ 2 FREE GIFTS</div>
+                </div>
+                <div class="scoop-card">
+                    <div class="scoop-number">3</div>
+                    <div class="scoop-content">6 Bracelets</div>
+                    <div class="free-gifts">+ 3 FREE GIFTS</div>
+                    <div class="bonus-item">✨ LUCKY CHARM</div>
+                </div>
+                <div class="scoop-card">
+                    <div class="scoop-number">4+</div>
+                    <div class="scoop-content">8+ Bracelets</div>
+                    <div class="free-gifts">+ MORE FREE GIFTS</div>
+                    <div class="bonus-item">✨ LUCKY CHARMS</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="box-section">
+            <div class="box-header">
+                <span class="box-icon">🎀</span>
+                KAWAII MIX BOXES
+            </div>
+            <div class="box-description">
+                Everything Mixed Together - Maximum Surprise!
+            </div>
+            <div class="scoop-options">
+                <div class="scoop-card">
+                    <div class="scoop-number">1</div>
+                    <div class="scoop-content">5-6 Mixed Items</div>
+                    <div class="free-gifts">+ 1 FREE GIFT</div>
+                </div>
+                <div class="scoop-card">
+                    <div class="scoop-number">2</div>
+                    <div class="scoop-content">10-12 Mixed Items</div>
+                    <div class="free-gifts">+ 2 FREE GIFTS</div>
+                </div>
+                <div class="scoop-card">
+                    <div class="scoop-number">3</div>
+                    <div class="scoop-content">15-18 Mixed Items</div>
+                    <div class="free-gifts">+ 3 FREE GIFTS</div>
+                    <div class="bonus-item">✨ LUCKY CHARM</div>
+                </div>
+                <div class="scoop-card">
+                    <div class="scoop-number">5</div>
+                    <div class="scoop-content">25-30 Mixed Items</div>
+                    <div class="free-gifts">+ 5 FREE GIFTS</div>
+                    <div class="bonus-item">✨ 2 LUCKY CHARMS</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="theme-section">
+            <div class="box-header">
+                <span class="box-icon">🎨</span>
+                COLOR THEME BOXES
+            </div>
+            <div class="box-description" style="text-align: center;">
+                All items perfectly color-coordinated for aesthetic goals! Available in same scoop options as above.
+            </div>
+            <div class="theme-grid">
+                <div class="theme-card pink">
+                    <div class="theme-title">🌸 Soft Pink</div>
+                    <p style="color: #6B4C7C; font-size: 12px;">Kawaii princess vibes</p>
+                </div>
+                <div class="theme-card brown">
+                    <div class="theme-title">🤎 Mocha Chic</div>
+                    <p style="color: #6B4C7C; font-size: 12px;">Neutral aesthetic</p>
+                </div>
+                <div class="theme-card green">
+                    <div class="theme-title">🍵 Matcha Mood</div>
+                    <p style="color: #6B4C7C; font-size: 12px;">Calm & cozy</p>
+                </div>
+                <div class="theme-card purple">
+                    <div class="theme-title">💜 Lavender Dreams</div>
+                    <p style="color: #6B4C7C; font-size: 12px;">Dreamy magic</p>
+                </div>
+                <div class="theme-card blue">
+                    <div class="theme-title">💙 Sky Blue</div>
+                    <p style="color: #6B4C7C; font-size: 12px;">Fresh & clean</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="lucky-game">
+            <div class="lucky-title">🎰 BUNNY CHARM GAME 🎰</div>
+            <div style="font-size: 16px; color: #6B4C7C; margin-bottom: 15px;">
+                Every order includes a colored bunny charm! 🐰<br>
+                Tell us your wish color - if it matches, you win a FREE EXTRA SCOOP! ✨<br>
+                <strong>Colors: 🩷 Pink • 💜 Purple • 💚 Green • 💛 Yellow • 💙 Blue</strong>
+            </div>
+        </div>
+        
+        <div class="contact-info">
+            <button class="dm-button">DM @bunbunboxes to order! 💌</button>
+            <div style="margin-top: 15px; font-size: 14px;">
+                📍 Based in Trinidad & Tobago<br>
+                #BunBunBoxes #KawaiiTT #MysteryBoxesTrinidad
+            </div>
+        </div>
+    </div>
+</body>
+</html>
